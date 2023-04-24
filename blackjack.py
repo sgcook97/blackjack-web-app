@@ -59,13 +59,14 @@ def init_deck(deck_count=6):
 def draw_card(deckId, draw=1):
     DRAW_CARDS_PATH = f"/{deckId}/draw/?count={draw}"
     draw_response = requests.get(DECK_URL + DRAW_CARDS_PATH)
+    # returns a list containing the card(s) drawn
     return draw_response.json()['cards']
 
 
 # returns all cards to the deck
 def return_cards(deckId):
     RETURN_PATH = f"/{deckId}/return/"
-    return_response = requests.get(DECK_URL + RETURN_PATH)
+    requests.get(DECK_URL + RETURN_PATH)
 
 
 # creates a new game of blackjack
@@ -75,8 +76,21 @@ def init_game():
     # initialize player and dealer hands
     player = draw_card(deck_id, 2)
     dealer = draw_card(deck_id, 2)
-
     return deck_id, player, dealer
+
+
+# calculates total of a hand
+def get_hand_total(hand):
+    total = 0
+    for card in hand:
+        if card['value'] == 'KING' or card['value'] == 'QUEEN' or card['value'] == 'JACK':
+            total += 10
+        elif card['value'] == 'ACE':
+            total += 11
+        else:
+            total += int(card['value'])
+    return total
+
 
 #########################################################################
 #   FLASK STUFF
@@ -94,7 +108,7 @@ def validateUser(username):
     return valid
 
 
-# MAIN PAGE
+# HOME PAGE
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
@@ -139,5 +153,17 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+# GAME PAGE
+@app.route('/table')
+@login_required
+def table():
+    deckId, player, dealer = init_game()
+
+    return render_template('table.html',
+                            player=player,
+                            dealer=dealer)
+
 
 app.run()

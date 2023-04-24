@@ -1,0 +1,44 @@
+.login {
+    border: 2px solid black;
+    height: 250px;
+    width: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: space-around;
+}
+
+.login-button {
+    font-family: inherit;
+    font-weight: 600;
+    background-color: black;
+    color: white;
+    border: solid black 1px;
+    border-radius: 3px;
+    transition-duration: 0.2s;
+}
+
+.login-button:hover {
+    color: black;
+    background-color: white;
+}
+
+.signup-button {
+    font-family: inherit;
+    font-weight: 600;
+    background-color: black;
+    color: white;
+    border: solid black 1px;
+    border-radius: 3px;
+    transition-duration: 0.2s;
+}
+
+.signup-button:hover {
+    color: black;
+    background-color: white;
+}
+
+.login h2 {
+    text-align: center;
+}
