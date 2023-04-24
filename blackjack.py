@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, flash, url_for, redirect
+from flask import Flask, render_template, request, flash, url_for, redirect, session
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 import os
 import requests
@@ -20,6 +21,8 @@ login_manager.login_view = 'login'
 
 app.secret_key = os.getenv("SECRET_KEY")
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_PERMANENT"] = False
+Session(app)
 
 
 #########################################################################
@@ -155,13 +158,28 @@ def logout():
     return redirect(url_for('index'))
 
 
+# NEW GAME ROUTE
+@app.route('/newgame')
+@login_required
+def newgame():
+    session['deckId'], session['player'], session['dealer'] = init_game()
+    return redirect(url_for('table'))
+
 # GAME PAGE
-@app.route('/table')
+@app.route('/table', methods=['GET', 'POST'])
 @login_required
 def table():
-    deckId, player, dealer = init_game()
+
+    deckId = session['deckId']
+    player = session['player']
+    dealer = session['dealer']
+
+    if request.method == 'POST':
+        player.append(draw_card(deckId)[0])
+        session['player'] = player
 
     return render_template('table.html',
+                            deckId=deckId,
                             player=player,
                             dealer=dealer)
 

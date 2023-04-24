@@ -1,3 +1,4 @@
 venv
 .env
 db-stuff.txt
+flask_session

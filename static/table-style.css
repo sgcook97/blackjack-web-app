@@ -1,4 +1,17 @@
-.hand {
+.dealer-hand {
+    position: absolute;
+    top: 0;
+    border: solid gray 1px;
+    border-radius: 5px;
+    width: 100%;
+    margin: 20px;
+    padding: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.player-hand {
     position: absolute;
     bottom: 0;
     border: solid gray 1px;
@@ -34,25 +47,39 @@
 .add-card {
     margin: 5px;
     width: 150px;
-    height: 207px;
-    border: solid gray 2px;
+    height: 210px;
+    border: none;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.add-card .add {
-    font-family: inherit;
-    font-size: 60px;
-    border: none;
-    background-color: white;
-    color: gray;
-    width: 100%;
+.add-card form {
     height: 100%;
+    width: 100%;
+    border-radius: 10px;
 }
 
-.add-card form {
-    height: 95%;
+.add-card .deck-id {
+    display: none;
+}
+
+.add-card .add {
+    padding: 0;
+    font-family: inherit;
+    font-size: 80px;
+    border: solid rgb(150, 150, 150) 2px;
+    border-radius: 10px;
+    background-color: white;
+    color: rgb(150, 150, 150);
     width: 100%;
+    height: 100%;
+    transition-duration: 0.2s;
+}
+
+.add-card .add:hover {
+    background-color: rgb(230, 230, 230);
+    color: rgb(104, 104, 104);
+    /* border-color: rgb(90, 90, 90); */
 }
