@@ -89,6 +89,7 @@ header .title-bar {
 }
 
 .buttons button {
+    margin: 5px;
     font-family: inherit;
     font-size: 15px;
     font-weight: 600;

@@ -20,7 +20,19 @@
     </header>
 
     <div class="container">
-        <div class="hand">
+        <div class="dealer-hand">
+            <div class="card">
+                <img src="{{ url_for('static', filename='back-of-card.png') }}" alt="">
+            </div>
+            {% for i in range(1, dealer|length) %}
+            <div class="card">
+                <img src="{{ dealer[i]['image'] }}">
+            </div>
+            {% endfor %}
+        </div>
+
+
+        <div class="player-hand">
             {% for card in player %}
             <div class="card">
                 <!-- <p>{{ card['value'] }} of {{ card['suit'] }}</p> -->
@@ -28,7 +40,8 @@
             </div>
             {% endfor %}
             <div class="add-card">
-                <form method="GET">
+                <form method="POST">
+                    <input type="text" class="deck-id" name="deckId" value="{{ deckId }}" readonly>
                     <input type="submit" class="add" value="+">
                 </form>
             </div>

@@ -22,7 +22,7 @@
         {% if current_user.is_authenticated %}
         <h1>Start a new game:</h1>
         <div class="buttons">
-            <a href="{{ url_for('table') }}"><button>New Game</button></a>
+            <a href="{{ url_for('newgame') }}"><button>New Game</button></a>
             <a href="{{ url_for('logout') }}"><button>Logout</button></a>
         </div>
         {% else %}
