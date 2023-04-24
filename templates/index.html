@@ -19,8 +19,19 @@
     </header>
 
     <div class="container">
-        <h1>Stuff</h1>
-        <p>more stuff will go here</p>
+        {% if current_user.is_authenticated %}
+        <h1>Start a new game:</h1>
+        <div class="buttons">
+            <a href="{{ url_for('table') }}"><button>New Game</button></a>
+            <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+        </div>
+        {% else %}
+        <h1>Login or Sign up to play</h1>
+        <div class="buttons">
+            <a href="{{ url_for('login') }}"><button>Login</button></a>
+            <a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
+        </div>
+        {% endif %}
     </div>
 </body>
 

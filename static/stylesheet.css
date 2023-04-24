@@ -88,34 +88,22 @@ header .title-bar {
     align-content: center;
 }
 
-
-@media only screen and (max-width: 640px) {
-    header {
-        height: 130px;
-    }
-
-    .container {
-        top: 130px;
-    }
-
-    .movies {
-        top: 130px;
-    }
+.buttons button {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: black;
+    color: white;
+    border: solid black 1px;
+    border-radius: 3px;
+    width: 100px;
+    height: 30px;
+    transition-duration: 0.2s;
 }
 
-.login {
-    border: 2px solid black;
-    height: 250px;
-    width: 350px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    align-content: space-around;
-}
-
-.login h2 {
-    text-align: center;
+.buttons button:hover {
+    color: black;
+    background-color: white;
 }
 
 .flash {
@@ -127,4 +115,14 @@ header .title-bar {
 
 input:focus {
     outline: none;
+}
+
+@media only screen and (max-width: 640px) {
+    header {
+        height: 130px;
+    }
+
+    .container {
+        top: 130px;
+    }
 }
