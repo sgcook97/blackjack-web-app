@@ -6,7 +6,9 @@ import random
 from dotenv import load_dotenv, find_dotenv
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required, UserMixin
 
-
+#########################################################################
+#   APP AND DB SETUP/CONFIG
+#########################################################################
 load_dotenv(find_dotenv())
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
@@ -20,12 +22,9 @@ app.secret_key = os.getenv("SECRET_KEY")
 app.config["SESSION_TYPE"] = "filesystem"
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return Person.query.get(int(user_id))
-
 #########################################################################
-
+#   DATABASE STUFF
+#########################################################################
 # creates a table of users
 class Person(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,18 +42,62 @@ with app.app_context():
     db.create_all()
 
 #########################################################################
+#   GAME LOGIC/API INTEGRATION
+#########################################################################
+
+DECK_URL = "https://www.deckofcardsapi.com/api/deck"
+
+# returns the deck id of a newly shuffled deck
+def init_deck(deck_count=6):
+    NEW_DECK_PATH = f"/new/shuffle/?deck_count={deck_count}"
+    deck_response = requests.get(DECK_URL + NEW_DECK_PATH)
+    return deck_response.json()['deck_id']
 
 
-# MAIN PAGE
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    return render_template('index.html')
+# draws a specified amount of cards from the deck
+# with the deck id provided
+def draw_card(deckId, draw=1):
+    DRAW_CARDS_PATH = f"/{deckId}/draw/?count={draw}"
+    draw_response = requests.get(DECK_URL + DRAW_CARDS_PATH)
+    return draw_response.json()['cards']
+
+
+# returns all cards to the deck
+def return_cards(deckId):
+    RETURN_PATH = f"/{deckId}/return/"
+    return_response = requests.get(DECK_URL + RETURN_PATH)
+
+
+# creates a new game of blackjack
+def init_game():
+    # create new deck
+    deck_id = init_deck()
+    # initialize player and dealer hands
+    player = draw_card(deck_id, 2)
+    dealer = draw_card(deck_id, 2)
+
+    return deck_id, player, dealer
+
+#########################################################################
+#   FLASK STUFF
+#########################################################################
+
+# sets the current user
+@login_manager.user_loader
+def load_user(user_id):
+    return Person.query.get(int(user_id))
 
 
 # verifies if a user is valid or not
 def validateUser(username):
     valid = db.session.query(Person.username).filter_by(username=username).scalar()
     return valid
+
+
+# MAIN PAGE
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return render_template('index.html')
 
 
 # LOGIN PAGE
