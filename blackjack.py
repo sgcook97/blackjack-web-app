@@ -32,12 +32,14 @@ Session(app)
 class Person(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
+    wins = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self) -> str:
-        return f"Person with username: {self.username}"
+        return f"Person with username: {self.username} has {self.wins} wins."
 
-    def __init__(self, username):
+    def __init__(self, username, wins):
         self.username = username
+        self.wins = wins
 
 
 # create tables
@@ -94,6 +96,14 @@ def get_hand_total(hand):
             total += int(card['value'])
     return total
 
+# determines if the dealer should hit or stand
+# depending on the score of their hand
+def stand(hand):
+    stand = True
+    if get_hand_total(hand) <= 15:
+        stand = False
+    return stand
+
 
 #########################################################################
 #   FLASK STUFF
@@ -140,7 +150,7 @@ def signup():
         else:
             username = request.form['username']
             if not validateUser(username):
-                user = Person(username)
+                user = Person(username, 0)
                 db.session.add(user)
                 db.session.commit()
                 login_user(user)
@@ -173,15 +183,38 @@ def table():
     deckId = session['deckId']
     player = session['player']
     dealer = session['dealer']
+    gameover = False
+    playerWins = False
 
     if request.method == 'POST':
-        player.append(draw_card(deckId)[0])
-        session['player'] = player
+        if 'add' in request.form:
+            player.append(draw_card(deckId)[0])
+            session['player'] = player
+            if not stand(dealer) and get_hand_total(player) <= 21:
+                dealer.append(draw_card(deckId)[0])
+                session['dealer'] = dealer
+        if 'stay' in request.form:
+            gameover = True
+
+    playerTotal = get_hand_total(player)
+    dealerTotal = get_hand_total(dealer)
+
+    if (dealerTotal > 21 or playerTotal > 21) or gameover:
+        gameover = True
+        if playerTotal <= 21 and playerTotal > dealerTotal:
+            current_user.wins += 1
+            db.session.commit()
+            playerWins = True
+
+    num_player_wins = current_user.wins
 
     return render_template('table.html',
                             deckId=deckId,
                             player=player,
-                            dealer=dealer)
+                            dealer=dealer,
+                            gameover=gameover,
+                            playerWins=playerWins,
+                            num_player_wins=num_player_wins)
 
 
-app.run()
+#app.run()
