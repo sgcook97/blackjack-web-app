@@ -201,7 +201,7 @@ def table():
 
     if (dealerTotal > 21 or playerTotal > 21) or gameover:
         gameover = True
-        if playerTotal <= 21:
+        if playerTotal <= 21 and playerTotal > dealerTotal:
             current_user.wins += 1
             db.session.commit()
             playerWins = True
@@ -217,4 +217,4 @@ def table():
                             num_player_wins=num_player_wins)
 
 
-app.run()
+#app.run()
