@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    
     <header>
         <div class="title-bar">
             <h1><a href="/">Blackjack</a></h1>
@@ -19,6 +20,7 @@
         </div>
     </header>
 
+    {% if not gameover %}
     <div class="container">
         <div class="dealer-hand">
             <div class="card">
@@ -31,6 +33,11 @@
             {% endfor %}
         </div>
 
+        <div class="stay">
+            <form method="POST">
+                <input type="submit" class="stay-button" name="stay" value="Stay">
+            </form>
+        </div>
 
         <div class="player-hand">
             {% for card in player %}
@@ -41,11 +48,49 @@
             {% endfor %}
             <div class="add-card">
                 <form method="POST">
-                    <input type="submit" class="add" value="+">
+                    <input type="submit" class="add" name="add" value="+">
                 </form>
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="dealer-hand">
+            {% for card in dealer %}
+            <div class="card">
+                <!-- <p>{{ card['value'] }} of {{ card['suit'] }}</p> -->
+                <img src="{{ card['image'] }}">
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="gameover">
+            <div class="winner">
+                {% if playerWins %}
+                <h1>You Win!!!</h1>
+                {% else %}
+                <h1>Better luck next time...</h1>
+                {% endif %}
+                <p>You've won {{ num_player_wins }} games</p>
+            </div>
+            <div class="buttons">
+                <a href="{{ url_for('newgame') }}"><button>New Game</button></a>
+                <a href="{{ url_for('index') }}"><button>Home Page</button></a>
+            </div>
+        </div>
+
+        <div class="player-hand">
+            {% for card in player %}
+            <div class="card">
+                <!-- <p>{{ card['value'] }} of {{ card['suit'] }}</p> -->
+                <img src="{{ card['image'] }}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 
 </body>
 
