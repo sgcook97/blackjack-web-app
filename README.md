@@ -2,9 +2,8 @@
 
 github repo: https://github.com/sgcook97/cs-3398-blackjack-web-app
 
-Sam pull requests:
-
-Chase pull requests:
+Pull Requests link: Chase (Ravag3r14) , Sam (Sgcook97)
+https://github.com/sgcook97/cs-3398-blackjack-web-app/pulls?q=
 
 Project Proposal: https://docs.google.com/document/d/1fPPUgwikJG7s6zngMp4YILtqFttzke6bHr-oMeCt3fs/edit?usp=sharing
 
