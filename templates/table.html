@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    
+
     <header>
         <div class="title-bar">
             <h1><a href="/">Blackjack</a></h1>
@@ -35,7 +35,7 @@
 
         <div class="stay">
             <form method="POST">
-                <input type="submit" class="stay-button" name="stay" value="Stay">
+                <input type="submit" class="stay-button" name="stay" value="Stand">
             </form>
         </div>
 
@@ -48,7 +48,7 @@
             {% endfor %}
             <div class="add-card">
                 <form method="POST">
-                    <input type="submit" class="add" name="add" value="+">
+                    <input type="submit" class="add" name="add" value="Hit">
                 </form>
             </div>
         </div>
@@ -70,8 +70,10 @@
             <div class="winner">
                 {% if playerWins %}
                 <h1>You Win!!!</h1>
-                {% else %}
+                {% elif playerLoses %}
                 <h1>Better luck next time...</h1>
+                {% elif playerDraws %}
+                <h1>Its a Draw</h1>
                 {% endif %}
                 <p>You've won {{ num_player_wins }} games</p>
             </div>
