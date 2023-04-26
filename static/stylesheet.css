@@ -88,6 +88,15 @@ header .title-bar {
     align-content: center;
 }
 
+.rules {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
 .buttons button {
     margin: 5px;
     font-family: inherit;
