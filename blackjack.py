@@ -3,7 +3,6 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 import os
 import requests
-import random
 from dotenv import load_dotenv, find_dotenv
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required, UserMixin
 
