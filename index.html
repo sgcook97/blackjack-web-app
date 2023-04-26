@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='stylesheet.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="title-bar">
+            <h1><a href="/">Blackjack</a></h1>
+            {% if not current_user.is_authenticated %}
+            <h3><a href="{{ url_for('login') }}">Login</a>/<a href="{{ url_for('signup') }}">Sign Up</a></h3>
+            {% else %}
+            <h3><a href="{{ url_for('logout') }}">Logout</a></h3>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="container">
+        {% if current_user.is_authenticated %}
+        <h1>Start a new game:</h1>
+        <div class="buttons">
+            <a href="{{ url_for('newgame') }}"><button>New Game</button></a>
+            <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+        </div>
+        {% else %}
+        <h1>Login or Sign up to play</h1>
+        <div class="buttons">
+            <a href="{{ url_for('login') }}"><button>Login</button></a>
+            <a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
+        </div>
+        {% endif %}
+    </div>
+    <div class="rules">
+        <h2>Game Rules:</h2>
+        <ul>
+            <li>Attempt to beat the dealer by getting as close to 21 as possible without going over 21</li>
+            <li>Kings, Queens, and Jacks will all be set to the value of 10</li>
+            <li>Aces will be taken in as 11 at first but if the value with the ace exceeds 21 then it will set the ace
+                to 1</li>
+        </ul>
+    </div>
+</body>
+
+</html>

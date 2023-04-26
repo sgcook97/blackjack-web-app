@@ -52,6 +52,7 @@ with app.app_context():
 
 DECK_URL = "https://www.deckofcardsapi.com/api/deck"
 
+
 # returns the deck id of a newly shuffled deck
 def init_deck(deck_count=6):
     NEW_DECK_PATH = f"/new/shuffle/?deck_count={deck_count}"
@@ -87,13 +88,18 @@ def init_game():
 # calculates total of a hand
 def get_hand_total(hand):
     total = 0
+    ace_check = False
     for card in hand:
         if card['value'] == 'KING' or card['value'] == 'QUEEN' or card['value'] == 'JACK':
             total += 10
         elif card['value'] == 'ACE':
             total += 11
+            ace_check = True
         else:
             total += int(card['value'])
+    if total > 21 and ace_check == True:
+        total -= 10
+
     return total
 
 # determines if the dealer should hit or stand
@@ -185,6 +191,8 @@ def table():
     dealer = session['dealer']
     gameover = False
     playerWins = False
+    playerDraws = False
+    playerLoses = False
 
     if request.method == 'POST':
         if 'add' in request.form:
@@ -201,10 +209,14 @@ def table():
 
     if (dealerTotal > 21 or playerTotal > 21) or gameover:
         gameover = True
-        if playerTotal <= 21 and playerTotal > dealerTotal:
+        if playerTotal <= 21 and playerTotal > dealerTotal or playerTotal < 21 and dealerTotal > 21:
             current_user.wins += 1
             db.session.commit()
             playerWins = True
+        if dealerTotal <= 21 and dealerTotal > playerTotal or dealerTotal < 21 and playerTotal > 21:
+            playerLoses = True
+        if dealerTotal == playerTotal:
+            playerDraws = True
 
     num_player_wins = current_user.wins
 
@@ -214,7 +226,9 @@ def table():
                             dealer=dealer,
                             gameover=gameover,
                             playerWins=playerWins,
+                            playerLoses=playerLoses,
+                            playerDraws=playerDraws,
                             num_player_wins=num_player_wins)
 
 
-#app.run()
+app.run()
