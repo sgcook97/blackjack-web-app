@@ -5,6 +5,7 @@ github repo: https://github.com/sgcook97/cs-3398-blackjack-web-app
 Chase (Ravag3r14) Pull Requests:
   * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/8
   * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/6
+
 Sam (Sgcook97) Pull Requests:
   * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/5
   * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/4
