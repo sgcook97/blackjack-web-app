@@ -30,4 +30,3 @@ web app link: https://blackjack.fly.dev/
 ## Things we didn't enjoy / wanted to learn
 1. We wanted to learn a more efficient way of working in the black jack logic
 2. We wanted to learn more about making out web page look more like an actual black jack table
-## Strech Features
