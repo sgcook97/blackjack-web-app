@@ -3,7 +3,6 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 import os
 import requests
-import random
 from dotenv import load_dotenv, find_dotenv
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required, UserMixin
 
@@ -99,7 +98,6 @@ def get_hand_total(hand):
             total += int(card['value'])
     if total > 21 and ace_check == True:
         total -= 10
-
     return total
 
 # determines if the dealer should hit or stand
@@ -192,7 +190,6 @@ def table():
     gameover = False
     playerWins = False
     playerDraws = False
-    playerLoses = False
 
     if request.method == 'POST':
         if 'add' in request.form:
@@ -209,13 +206,11 @@ def table():
 
     if (dealerTotal > 21 or playerTotal > 21) or gameover:
         gameover = True
-        if playerTotal <= 21 and playerTotal > dealerTotal or playerTotal < 21 and dealerTotal > 21:
+        if playerTotal <= 21 and (playerTotal > dealerTotal or dealerTotal > 21):
             current_user.wins += 1
             db.session.commit()
             playerWins = True
-        if dealerTotal <= 21 and dealerTotal > playerTotal or dealerTotal < 21 and playerTotal > 21:
-            playerLoses = True
-        if dealerTotal == playerTotal:
+        elif dealerTotal == playerTotal and playerTotal <= 21:
             playerDraws = True
 
     num_player_wins = current_user.wins
@@ -226,9 +221,8 @@ def table():
                             dealer=dealer,
                             gameover=gameover,
                             playerWins=playerWins,
-                            playerLoses=playerLoses,
                             playerDraws=playerDraws,
                             num_player_wins=num_player_wins)
 
 
-app.run()
+#app.run()
