@@ -1,17 +1,6 @@
-# cs-3398-blackhack-web-app: 
+# Blackjack Web App
 
-github repo: https://github.com/sgcook97/cs-3398-blackjack-web-app
-
-Chase (Ravag3r14) Pull Requests:
-  * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/8
-  * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/6
-
-Sam (Sgcook97) Pull Requests:
-  * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/5
-  * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/4
-  * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/3
-  * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/2
-  * https://github.com/sgcook97/cs-3398-blackjack-web-app/pull/1
+This web app was developed as a collaboration between Sam Cook and Chase Perkola
 
 Project Proposal: https://docs.google.com/document/d/1fPPUgwikJG7s6zngMp4YILtqFttzke6bHr-oMeCt3fs/edit?usp=sharing
 
